@@ -33,7 +33,7 @@ class Autoencoder(nn.Module):
 
         # MLP
         self.mlp = nn.Sequential(
-            nn.Linear(hidden_dim+meta_dim, hidden_dim+meta_dim),
+            #nn.Linear(hidden_dim+meta_dim, hidden_dim+meta_dim),
             nn.Linear(hidden_dim+meta_dim, output_dim),
         )
         
@@ -94,3 +94,16 @@ class Autoencoder(nn.Module):
         metas = np.vstack(metas)
         clses = np.vstack(clses)
         return encoded, xs, recs, target, metas, clses
+
+    def predict(self, test_loader, device):
+        self.eval()
+        preds = []
+        with torch.no_grad():
+            for batch in test_loader:
+                x = batch[0].float().to(device)
+                meta = batch[1].float().to(device)
+                ecd,cls,recon = self(x,meta)
+                pred = cls.detach().cpu().numpy()
+                pred = (pred>0.5).astype(int)
+                preds += pred.tolist()
+        return np.array(preds)

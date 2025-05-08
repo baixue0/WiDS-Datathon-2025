@@ -14,7 +14,33 @@ with open('config/SETTINGS.json') as f:
     config = json.load(f)
 print(config)
 
-data = np.load(os.path.join(config['data_paths']['clean_data_dir'],'test.npy'),allow_pickle=True).item()
+
+#--------------- read inputs ---------------
+targets = pd.read_excel(config['data_paths']['train_targets'],index_col=0)
+cntm = pd.read_csv(config['data_paths']['train_cntm'],index_col=0)
+cntm_test = pd.read_csv(config['data_paths']['testnew_cntm'],index_col=0)
+meta_qt = pd.read_excel(config['data_paths']['train_meta_qt'],index_col=0)
+meta_qt_test = pd.read_excel(config['data_paths']['testnew_meta_qt'],index_col=0)
+meta_ct = pd.read_excel(config['data_paths']['train_meta_ct'],index_col=0)
+meta_ct_test = pd.read_excel(config['data_paths']['testnew_meta_ct'],index_col=0)
+print('loaded')
+
+#--------------- normalize train and test cntm using the same average and std---------------
+average = cntm.mean()
+std = cntm.std()
+cntm, cntm_test = (cntm-average)/std, (cntm_test-average)/std
+
+#--------------- scale meta data ---------------
+meta = pd.concat([meta_qt.drop('MRI_Track_Age_at_Scan',axis=1),(meta_ct[['Barratt_Barratt_P1_Occ','Barratt_Barratt_P2_Occ']].sum(1)/5).rename('Occ').to_frame()],axis=1)
+meta_test = pd.concat([meta_qt_test.drop('MRI_Track_Age_at_Scan',axis=1),(meta_ct_test[['Barratt_Barratt_P1_Occ','Barratt_Barratt_P2_Occ']].sum(1)/5).rename('Occ').to_frame()],axis=1)
+
+scaler = RobustScaler()
+meta = pd.DataFrame(scaler.fit_transform(meta),index=meta.index,columns=meta.columns).fillna(0)
+meta_test = pd.DataFrame(scaler.transform(meta_test),index=meta_test.index,columns=meta_test.columns).fillna(0)
+
+data = {'cntm':cntm_test,'meta':meta_test}
+
+#--------------- predict ---------------
 
 test_dataset = torch.utils.data.TensorDataset(
     torch.tensor(data['cntm'].to_numpy()),

@@ -32,7 +32,7 @@ best_models = []
 for class_weight in [0.1,1,10]:
     hgb = HistGradientBoostingClassifier(class_weight={0:1,1:class_weight})
     hgb.fit(pd.concat([data['cntm_train'],data['meta_train']],axis=1), data['targets_train'][target_col])
-    pred = lm.predict(pd.concat([data['cntm_val'],data['meta_val']],axis=1))
+    pred = hgb.predict(pd.concat([data['cntm_val'],data['meta_val']],axis=1))
     best_score = f1_score(data['targets_val'][target_col],pred)
     print('hgb',class_weight,round(best_score,3))
     best_scores.append(best_score)

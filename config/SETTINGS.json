@@ -1,0 +1,26 @@
+{
+    "data_paths": {
+      "train_targets": "/data/TRAIN_NEW/TRAINING_SOLUTIONS.xlsx",
+      "train_cntm": "/data/TRAIN_NEW/TRAIN_FUNCTIONAL_CONNECTOME_MATRICES_new_36P_Pearson.csv",
+      "test_cntm": "/data/TEST/TEST_FUNCTIONAL_CONNECTOME_MATRICES.csv",
+      "train_meta_qt": "/data/TRAIN_NEW/TRAIN_QUANTITATIVE_METADATA_new.xlsx",
+      "test_meta_qt": "/data/TEST/TEST_QUANTITATIVE_METADATA.xlsx",
+      "train_meta_ct": "/data/TRAIN_NEW/TRAIN_CATEGORICAL_METADATA_new.xlsx",
+      "test_meta_ct": "/data/TEST/TEST_CATEGORICAL.xlsx",
+      "testnew_cntm": "/data/TEST/TEST_FUNCTIONAL_CONNECTOME_MATRICES.csv",
+      "testnew_meta_qt": "/data/TEST/TEST_QUANTITATIVE_METADATA.xlsx",
+      "testnew_meta_ct": "/data/TEST/TEST_CATEGORICAL.xlsx",
+      "submission":"/data/submission.csv",
+      "clean_data_dir":"/tmp/clean",
+      "model_dir":"/tmp/models"
+    },
+    "num_seeds": 11,
+    "latent_dim":256,
+    "dropout":0.5,
+    "lr":1e-3,
+    "weight_decay":1e-4,
+    "epochs":40,
+    "batch_size":64
+
+  }
+  
