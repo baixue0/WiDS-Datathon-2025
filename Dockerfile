@@ -25,6 +25,7 @@ COPY autoencoder.py /app/autoencoder.py
 COPY prepare_data.py /app/prepare_data.py
 COPY train.py /app/train.py
 COPY predict.py /app/predict.py
+COPY predict_new.py /app/predict_new.py
 COPY run.sh /app/run.sh
 
 # Set the working directory

@@ -33,6 +33,7 @@ meta = pd.DataFrame(scaler.fit_transform(meta),index=meta.index,columns=meta.col
 meta_test = pd.DataFrame(scaler.transform(meta_test),index=meta_test.index,columns=meta_test.columns).fillna(0)
 
 #--------------- save clean train data ---------------
+os.makedirs(config['data_paths']['clean_data_dir'], exist_ok=True)
 np.save(os.path.join(config['data_paths']['clean_data_dir'],'test'),{
     'cntm':cntm_test,
     'meta':meta_test,
@@ -40,7 +41,6 @@ np.save(os.path.join(config['data_paths']['clean_data_dir'],'test'),{
 print('saved test data')
 
 #--------------- sample and save clean train/val data ---------------
-os.makedirs(config['data_paths']['clean_data_dir'], exist_ok=True)
 for i in range(config['num_seeds']):
     random.seed(i)
     pids_val = []

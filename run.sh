@@ -1,6 +1,7 @@
 #!/bin/bash
 
 python3 -u prepare_data.py
+echo "prepare data finished"
 
 # File containing JSON data
 json_file="config/SETTINGS.json"
