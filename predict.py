@@ -38,9 +38,10 @@ for path in model_paths:
     col = path.split('|')[0]
     preds[col].append(pred)
     print(path,pred)
+print(np.stack(preds['ADHD_Outcome']).mean(axis=0)>0.5)
 preds = pd.concat([
-    pd.Series((np.stack(preds['ADHD_Outcome']).mean(axis=1)>0.5).astype(int), index=data['cntm'].index).rename('ADHD_Outcome'),
-    pd.Series((np.stack(preds['Sex_F']).mean(axis=1)>0.5).astype(int), index=data['cntm'].index).rename('Sex_F'),
+    pd.Series((np.stack(preds['ADHD_Outcome']).mean(axis=0)>0.5).astype(int), index=data['cntm'].index).rename('ADHD_Outcome'),
+    pd.Series((np.stack(preds['Sex_F']).mean(axis=0)>0.5).astype(int), index=data['cntm'].index).rename('Sex_F'),
 ],axis=1)
 print(preds)
 preds.to_csv(config['data_paths']['submission'])

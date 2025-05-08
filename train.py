@@ -21,9 +21,9 @@ parser.add_argument("--target_col", help='ADHD_Outcome or Sex_F', required=True)
 parser.add_argument("--seed", help='0, 1, 2', required=True)
 args = parser.parse_args()
 target_col = args.target_col
-seed = args.seed
+seed = int(args.seed)-1
 
-data = np.load(os.path.join(config['data_paths']['clean_data_dir'],'train_val'+seed+'.npy'),allow_pickle=True).item()
+data = np.load(os.path.join(config['data_paths']['clean_data_dir'],'train_val'+str(seed)+'.npy'),allow_pickle=True).item()
 print(data.keys())
 
 best_scores = []
