@@ -38,8 +38,8 @@ for path in model_paths:
     col = path.split('|')[0]
     preds[col].append(pred)
     print(path,pred)
-preds['ADHD_Outcome'] = (np.stack(preds['ADHD_Outcome']).mean()>0.5).astype(int)
-preds['Sex_F'] = (np.stack(preds['Sex_F']).mean()>0.5).astype(int)
+preds['ADHD_Outcome'] = (np.stack(preds['ADHD_Outcome']).mean(axis=1)>0.5).astype(int)
+preds['Sex_F'] = (np.stack(preds['Sex_F']).mean(axis=1)>0.5).astype(int)
 preds = pd.DataFrame(preds,index=data['cntm'].index)
 print(preds)
 preds.to_csv(config['data_paths']['submission'])
