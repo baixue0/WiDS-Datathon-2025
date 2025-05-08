@@ -14,7 +14,7 @@
       "clean_data_dir":"/tmp/clean",
       "model_dir":"/tmp/models"
     },
-    "num_seeds": 11,
+    "num_seeds": 3,
     "latent_dim":256,
     "dropout":0.5,
     "lr":1e-3,
